@@ -4,6 +4,7 @@ This browser extension will add the option in the Firefox application settings t
 **DISCLAIMER:** This browser extension is unofficial and is not affiliated with Microsoft.
 
 **CURRENT VERSION:** 1.0
+
 **PRODUCT PAGE:** [View Now](https://addons.mozilla.org/firefox/addon/outlook-com-mailto/)
 
 ## Release Notes
