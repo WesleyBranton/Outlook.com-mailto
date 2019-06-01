@@ -31,6 +31,6 @@
 	"protocol_handlers": [{
 		"protocol": "mailto",
 		"name": "Outlook.com",
-		"uriTemplate": "/handler/sendemail.html?%s"
+		"uriTemplate": "/handler/sendemail.html?to=%s"
 	}]
 }
