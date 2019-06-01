@@ -17,6 +17,10 @@
 		"96": "icons/icon-96.png"
 	},
 	
+	"options_ui": {
+		"page": "options/options.html"
+	},
+	
 	"browser_specific_settings": {
 		"gecko": {
 			"id": "outlook@computerwhiz",
