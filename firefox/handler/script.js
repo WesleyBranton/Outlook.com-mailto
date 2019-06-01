@@ -37,6 +37,7 @@ function loaded(info) {
 
 let data = browser.storage.local.get();
 data.then(loaded);
+// Load button click events
 window.onload = function(){
 	document.getElementById("live").addEventListener("click", function(){redirect('live')});
 	document.getElementById("office").addEventListener("click", function(){redirect('office')});

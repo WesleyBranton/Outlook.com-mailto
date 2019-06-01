@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title></title>
+		<title>Select Outlook.com version</title>
 		<meta charset="utf-8"/>
+		<link rel="icon" type="image/png" href="../icons/icon-96.png">
 		<link rel="stylesheet" href="style.css"/>
 		<script src="script.js"></script>
 	</head>
@@ -14,8 +15,12 @@
 			<br>
 			<button id="office">Organization</button>
 			<br>
-			<input type="checkbox" name="doNotAsk" id="doNotAsk"/>
-			<label for="doNotAsk">Do not ask me again</label>
+			<label class="checkbox" for="doNotAsk">Do not ask me again
+				<input type="checkbox" name="doNotAsk" id="doNotAsk">
+				<span class="checkmark"></span>
+			</label>
+			<!--<input type="checkbox" name="doNotAsk" id="doNotAsk"/>
+			<label for="doNotAsk">Do not ask me again</label>-->
 		</div>
 		<div id="loading">
 			<h1>Loading...</h1>
