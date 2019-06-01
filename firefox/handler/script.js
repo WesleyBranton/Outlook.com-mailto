@@ -18,7 +18,16 @@ function createURL() {
 function redirect(mode) {
 	var parameters = createURL();
 	var url = "https://outlook." + mode + ".com/mail/deeplink/compose" + parameters;
+	browser.storage.local.set({'lastEmail': parameters});
 	window.location.replace(url);
 }
 
-redirect('live');
+// Automatically load if user selected "Do not ask again"
+function loaded(info) {
+	if (info.doNotAsk) {
+		redirect(info.mode);
+	}
+}
+
+let data = browser.storage.local.get();
+data.then(loaded);

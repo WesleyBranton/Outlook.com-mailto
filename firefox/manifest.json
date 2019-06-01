@@ -32,5 +32,7 @@
 		"protocol": "mailto",
 		"name": "Outlook.com",
 		"uriTemplate": "/handler/sendemail.html?to=%s"
-	}]
+	}],
+	
+	"permissions": ["storage"]
 }
