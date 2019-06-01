@@ -19,8 +19,10 @@ function redirect(mode) {
 	var parameters = createURL();
 	var url = "https://outlook." + mode + ".com/mail/deeplink/compose" + parameters;
 	browser.storage.local.set({'lastEmail': parameters});
-	if (document.getElementById('doNotAsk').checked) {
-		browser.storage.local.set({'mode': mode});
+	if (!proceed) {
+		if (document.getElementById('doNotAsk').checked) {
+			browser.storage.local.set({'mode': mode});
+		}
 	}
 	window.location.replace(url);
 }
@@ -28,17 +30,22 @@ function redirect(mode) {
 // Automatically load if user selected "Do not ask again"
 function loaded(info) {
 	if (info.mode == 'live' || info.mode == 'office') {
+		proceed = true;
 		redirect(info.mode);
 	} else {
-		document.getElementById('loading').className = 'hide';
-		document.getElementById('choose').className = '';
+		proceed = false;
 	}
 }
 
+var proceed;
 let data = browser.storage.local.get();
 data.then(loaded);
 // Load button click events
 window.onload = function(){
 	document.getElementById("live").addEventListener("click", function(){redirect('live')});
 	document.getElementById("office").addEventListener("click", function(){redirect('office')});
+	if (!proceed) {
+		document.getElementById('loading').className = 'hide';
+		document.getElementById('choose').className = '';
+	}
 };
