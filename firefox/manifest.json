@@ -27,6 +27,6 @@
 	"protocol_handlers": [{
 		"protocol": "mailto",
 		"name": "Outlook.com",
-		"uriTemplate": "https://outlook.live.com/mail/deeplink/compose?to=%s"
+		"uriTemplate": "/handler/sendemail.html?%s"
 	}]
 }
