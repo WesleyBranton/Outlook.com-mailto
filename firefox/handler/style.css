@@ -1,0 +1,20 @@
+/* Body settings */
+body {
+	font-family:sans-serif;
+	margin:0px;
+	padding:0px;
+	text-align:center;
+	display:flex;
+	flex-direction:column;
+	min-height:100vh;
+}
+
+/* Vertically center menu */
+.spacer {
+	flex:1;
+}
+
+/* Hidden element */
+.hide {
+	display:none;
+}

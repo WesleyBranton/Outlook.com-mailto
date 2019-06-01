@@ -2,9 +2,24 @@
 <html>
 	<head>
 		<title></title>
+		<meta charset="utf-8"/>
+		<link rel="stylesheet" href="style.css"/>
 		<script src="script.js"></script>
 	</head>
 	<body>
-		
+		<div class="spacer"></div>
+		<div id="choose" class="hide">
+			<h1>Which version of Outlook.com would you like to use?</h1>
+			<button id="live">Personal</button>
+			<br>
+			<button id="office">Organization</button>
+			<br>
+			<input type="checkbox" name="doNotAsk" id="doNotAsk"/>
+			<label for="doNotAsk">Do not ask me again</label>
+		</div>
+		<div id="loading">
+			<h1>Loading...</h1>
+		</div>
+		<div class="spacer"></div>
 	</body>
 </html>
