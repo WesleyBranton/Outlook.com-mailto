@@ -34,5 +34,9 @@
 		"uriTemplate": "/handler/sendemail.html?to=%s"
 	}],
 	
+	"background": {
+			"scripts": ["background.js"]
+	},
+	
 	"permissions": ["storage"]
 }
