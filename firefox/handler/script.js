@@ -24,7 +24,7 @@ function redirect(mode) {
 
 // Automatically load if user selected "Do not ask again"
 function loaded(info) {
-	if (info.doNotAsk) {
+	if (info.mode == 'live' || info.mode == 'office') {
 		redirect(info.mode);
 	}
 }
