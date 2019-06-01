@@ -14,5 +14,11 @@ function createURL() {
 	return formatURL;
 }
 
-var parameters = createURL();
-var url = "https://outlook.live.com/mail/deeplink/compose" + parameters;
+// Load email composition page
+function redirect(mode) {
+	var parameters = createURL();
+	var url = "https://outlook." + mode + ".com/mail/deeplink/compose" + parameters;
+	window.location.replace(url);
+}
+
+redirect('live');
