@@ -1,7 +1,7 @@
 {
 	"manifest_version": 2,
 	"name": "Outlook.com mailto",
-	"version": "1.0",
+	"version": "2.0",
 	"description": "Add Outlook.com as a default email provider for all mailto links.",
 	"author": "Wesley Branton",
 	
@@ -17,6 +17,10 @@
 		"96": "icons/icon-96.png"
 	},
 	
+	"options_ui": {
+		"page": "options/options.html"
+	},
+	
 	"browser_specific_settings": {
 		"gecko": {
 			"id": "outlook@computerwhiz",
@@ -27,6 +31,12 @@
 	"protocol_handlers": [{
 		"protocol": "mailto",
 		"name": "Outlook.com",
-		"uriTemplate": "https://outlook.live.com/mail/deeplink/compose?to=%s"
-	}]
+		"uriTemplate": "/handler/sendmail.html?to=%s"
+	}],
+	
+	"background": {
+			"scripts": ["background.js"]
+	},
+	
+	"permissions": ["storage","tabs"]
 }
