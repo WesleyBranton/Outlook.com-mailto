@@ -18,12 +18,12 @@ function createURL() {
 function redirect(mode) {
 	var parameters = createURL();
 	var url = "https://outlook." + mode + ".com/mail/deeplink/compose" + parameters;
-	browser.storage.local.set({'lastEmail': parameters});
 	if (!proceed) {
 		if (document.getElementById('doNotAsk').checked) {
 			browser.storage.local.set({'mode': mode});
 		}
 	}
+	chrome.runtime.sendMessage({'code':'create-handler','msg':[url,parameters]});
 	window.location.replace(url);
 }
 
@@ -40,6 +40,7 @@ function loaded(info) {
 var proceed;
 let data = browser.storage.local.get();
 data.then(loaded);
+
 // Load button click events
 window.onload = function(){
 	document.getElementById("live").addEventListener("click", function(){redirect('live')});

@@ -34,18 +34,9 @@
 		"uriTemplate": "/handler/sendemail.html?to=%s"
 	}],
 	
-	"content_scripts": [{
-		"matches": ["*://outlook.live.com/mail/deeplink/compose#to=*",
-			"*://outlook.live.com/mail/deeplink/compose/",
-			"*://outlook.office.com/mail/deeplink/compose",
-			"*://outlook.live.com/mail/deeplink/compose/"],
-		"js": ["restore/recover.js"],
-		"run_at": "document_start"
-	}],
-	
 	"background": {
 			"scripts": ["background.js"]
 	},
 	
-	"permissions": ["storage"]
+	"permissions": ["storage","tabs"]
 }
