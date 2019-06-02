@@ -25,3 +25,8 @@ legend {
 	border-bottom: 5px solid #0085A6;
 	text-shadow: 0px -2px #0085A6;
 }
+
+/* Help link */
+a {
+	cursor:help;
+}
