@@ -18,7 +18,7 @@ function createURL() {
 function redirect(mode) {
 	var parameters = createURL();
 	var url = "https://outlook." + mode + ".com/mail/deeplink/compose" + parameters;
-	if (!proceed) {
+	if (!wait) {
 		if (document.getElementById('doNotAsk').checked) {
 			browser.storage.local.set({'mode': mode});
 		}
@@ -30,14 +30,23 @@ function redirect(mode) {
 // Automatically load if user selected "Do not ask again"
 function loaded(info) {
 	if (info.mode == 'live' || info.mode == 'office') {
-		proceed = true;
+		wait = true;
 		redirect(info.mode);
 	} else {
-		proceed = false;
+		wait = false;
+		refreshUI();
 	}
 }
 
-var proceed;
+// Refresh UI
+function refreshUI() {
+	if (document.getElementById('loading') && document.getElementById('choose')) {
+		document.getElementById('loading').className = 'hide';
+		document.getElementById('choose').className = '';
+	}
+}
+
+var wait = true;
 let data = browser.storage.local.get();
 data.then(loaded);
 
@@ -45,8 +54,7 @@ data.then(loaded);
 window.onload = function(){
 	document.getElementById("live").addEventListener("click", function(){redirect('live')});
 	document.getElementById("office").addEventListener("click", function(){redirect('office')});
-	if (!proceed) {
-		document.getElementById('loading').className = 'hide';
-		document.getElementById('choose').className = '';
+	if (!wait) {
+		refreshUI();
 	}
 };
