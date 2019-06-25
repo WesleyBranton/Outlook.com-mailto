@@ -31,12 +31,12 @@
 	"protocol_handlers": [{
 		"protocol": "mailto",
 		"name": "Outlook.com",
-		"uriTemplate": "/handler/sendmail.html?to=%s"
+		"uriTemplate": "https://outlook.send/?to=%s"
 	}],
 	
 	"background": {
 			"scripts": ["background.js"]
 	},
 	
-	"permissions": ["storage","tabs"]
+	"permissions": ["storage","tabs","webRequest","webRequestBlocking","*://outlook.send/*"]
 }

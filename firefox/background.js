@@ -38,9 +38,20 @@ function listenMessage(message) {
 	}
 }
 
+// Opens tab
+function openTab(requestDetails) {
+	var link = requestDetails.url;
+	link = "/handler/sendmail.html" + link.slice(link.indexOf("?to"),link.length);
+	browser.tabs.create({
+		url:link
+	});
+	return {cancel: true};
+}
+
 let data = browser.storage.local.get();
 data.then(verify);
 var tmpUrl;
 const filter = {urls:["*://outlook.live.com/mail/deeplink/compose",
 	"*://outlook.office.com/mail/deeplink/compose"]};
 chrome.runtime.onMessage.addListener(listenMessage);
+browser.webRequest.onBeforeRequest.addListener(openTab,{urls:["*://outlook.send/*"]},["blocking"]);
