@@ -2,25 +2,10 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-// Converts Firefox mailto string into standard URL parameters
-function createURL() {
-	var decodedURL, to, formatURL;
-	decodedURL = decodeURIComponent(window.location);
-	decodedURL = decodedURL.slice(decodedURL.indexOf("mailto") + 7);
-	if (decodedURL.indexOf("?") >= 0) {
-		to = decodedURL.slice(0,decodedURL.indexOf("?"));
-		decodedURL = decodedURL.slice(decodedURL.indexOf("?") + 1);
-		formatURL = "?to=" + to + "&" + decodedURL;
-	} else {
-		to = decodedURL;
-		formatURL = "?to=" + to;
-	}
-	return formatURL;
-}
-
 // Load email composition page
 function redirect(mode) {
-	var parameters = createURL();
+	var parameters = decodeURIComponent(window.location);
+	parameters = parameters.slice(parameters.indexOf("?to="),parameters.length);
 	var url = "https://outlook." + mode + ".com/mail/deeplink/compose" + parameters;
 	if (!wait) {
 		if (document.getElementById('doNotAsk').checked) {
