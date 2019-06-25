@@ -18,7 +18,6 @@ function handleIncomplete(tabId, changeInfo, tabInfo) {
 
 // Handle tab that will not lose parameters
 function handleComplete(tabId, changeInfo, tabInfo) {
-	console.log("Running");
 	removeHandlers();
 }
 
