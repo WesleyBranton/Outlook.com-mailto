@@ -27,8 +27,8 @@ function removeHandlers() {
 	browser.tabs.onUpdated.removeListener(handleComplete);
 }
 
-// Message handler
-function listenMessage(message) {
+// Saves message data if the user needs to login
+function saveMessage(message) {
 	if (message.code == 'create-handler') {
 		// Create required handlers
 		browser.tabs.onUpdated.addListener(handleIncomplete, filter);
@@ -38,14 +38,42 @@ function listenMessage(message) {
 	}
 }
 
-// Opens tab
-function openTab(requestDetails) {
-	var link = requestDetails.url;
-	link = "/handler/sendmail.html" + link.slice(link.indexOf("?to"),link.length);
+// Opens new tab
+async function openTab(requestDetails) {
+	var params = await getParameters(requestDetails.url);
+	var base = await getBase();
+	var link = base + params;
 	browser.tabs.create({
 		url:link
 	});
+	saveMessage({'code':'create-handler','msg':[link,params]})
 	return {cancel: true};
+}
+
+// Converts Firefox mailto string into standard URL parameters
+function getParameters(url) {
+	var decodedURL, to, formatURL;
+	decodedURL = decodeURIComponent(url);
+	decodedURL = decodedURL.slice(decodedURL.indexOf("mailto") + 7);
+	if (decodedURL.indexOf("?") >= 0) {
+		to = decodedURL.slice(0,decodedURL.indexOf("?"));
+		decodedURL = decodedURL.slice(decodedURL.indexOf("?") + 1);
+		formatURL = "?to=" + to + "&" + decodedURL;
+	} else {
+		to = decodedURL;
+		formatURL = "?to=" + to;
+	}
+	return formatURL;
+}
+
+// Determines which Outlook service to go to
+async function getBase() {
+	var data = await browser.storage.local.get();
+	if (data.mode == 'live' || data.mode == 'office') {
+		return "https://outlook." + data.mode + ".com/mail/deeplink/compose";
+	} else {
+		return "/handler/sendmail.html";
+	}
 }
 
 let data = browser.storage.local.get();
@@ -53,5 +81,5 @@ data.then(verify);
 var tmpUrl;
 const filter = {urls:["*://outlook.live.com/mail/deeplink/compose",
 	"*://outlook.office.com/mail/deeplink/compose"]};
-chrome.runtime.onMessage.addListener(listenMessage);
+chrome.runtime.onMessage.addListener(saveMessage);
 browser.webRequest.onBeforeRequest.addListener(openTab,{urls:["*://outlook.send/*"]},["blocking"]);
