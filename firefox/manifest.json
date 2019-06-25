@@ -38,5 +38,11 @@
 			"scripts": ["background.js"]
 	},
 	
-	"permissions": ["storage","tabs","webRequest","webRequestBlocking","*://outlook.send/*"]
+	"permissions": [
+		"storage",
+		"tabs",
+		"webRequest",
+		"webRequestBlocking",
+		"*://outlook.send/*"
+	]
 }
