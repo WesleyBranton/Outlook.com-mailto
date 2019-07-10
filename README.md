@@ -15,6 +15,10 @@ To develop and test the extension, you need to open the "about:debugging" page i
 Further documentation about developing Firefox extensions can be found [here](https://developer.mozilla.org/docs/Mozilla/Add-ons/WebExtensions/Your_first_WebExtension).
 
 ## Release Notes
+### Version 2.2
+* **[FIXED]** Opening link in new tab no longer creates additional blank tab
+* **[FIXED]** Created tab always appears next to the original tab
+
 ### Version 2.1
 * **[FIXED]** Outlook now opens in a new tab
 * **[FIXED]** The Outlook selection screen will not load if you have selected "Don't ask again"
