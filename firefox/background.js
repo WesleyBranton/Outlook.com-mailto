@@ -52,6 +52,7 @@ async function openTab(requestDetails) {
 		});
 	} else {
 		browser.tabs.create({
+			index:tabInfo.index + 1,
 			url:link
 		});
 	}
