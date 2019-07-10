@@ -43,9 +43,19 @@ async function openTab(requestDetails) {
 	var params = await getParameters(requestDetails.url);
 	var base = await getBase();
 	var link = base + params;
-	browser.tabs.create({
-		url:link
-	});
+	let tabInfo = await browser.tabs.get(requestDetails.tabId);
+	
+	// Checks if the link is already in a new tab or if a new tab needs to be created
+	if (tabInfo.url == 'about:blank') {
+		browser.tabs.update(requestDetails.tabId, {
+			url:link
+		});
+	} else {
+		browser.tabs.create({
+			url:link
+		});
+	}
+	
 	saveMessage({'code':'create-handler','msg':[link,params]})
 	return {cancel: true};
 }
