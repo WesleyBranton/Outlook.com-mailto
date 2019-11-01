@@ -74,7 +74,31 @@ function getParameters(url) {
 		to = decodedURL;
 		formatURL = "?to=" + to;
 	}
-	return formatURL;
+	return format(formatURL);
+}
+
+// Converts all queries to lowercase
+function format(url) {
+	var output = '';
+	var urlParts = url.split('&');
+	
+	for (i = 0; i < urlParts.length; i++) {
+		// Adds the "&" to all but the first query
+		if (i > 0) {
+			output += '&';
+		}
+		
+		var end = urlParts[i].indexOf('=');
+		if (end > 0) {
+			var field = urlParts[i].substring(0, end);
+			var value = urlParts[i].substring(end);
+			output += field.toLowerCase() + value;
+		} else {
+			output += urlParts[i];
+		}
+	}
+	
+	return output;
 }
 
 // Determines which Outlook service to go to
