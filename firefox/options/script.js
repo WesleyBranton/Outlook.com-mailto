@@ -13,7 +13,9 @@ function restore(setting) {
 
 // Save settings
 function save() {
-	browser.storage.local.set({mode: settingMode.value});
+	browser.storage.local.set({
+		mode: document.settings.mode.value
+	});
 }
 
 var settingMode = document.getElementById('mode');
