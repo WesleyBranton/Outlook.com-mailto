@@ -5,18 +5,19 @@
 // Load settings
 function restore(setting) {
 	if (setting.mode != 'live' && setting.mode != 'office') {
-		settingMode.value = 'ask';
+		document.settings.mode.value = 'ask';
 	} else {
-		settingMode.value = setting.mode;
+		document.settings.mode.value = setting.mode;
 	}
 }
 
 // Save settings
 function save() {
-	browser.storage.local.set({mode: settingMode.value});
+	browser.storage.local.set({
+		mode: document.settings.mode.value
+	});
 }
 
-var settingMode = document.getElementById('mode');
 let data = browser.storage.local.get();
 data.then(restore);
-document.getElementsByTagName("form")[0].addEventListener("change", save);
+document.settings.addEventListener('change', save);

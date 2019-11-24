@@ -4,95 +4,95 @@
 
 /* Body settings */
 body {
-	font-family:sans-serif;
-	margin:0px;
-	padding:0px;
-	text-align:center;
-	display:flex;
-	flex-direction:column;
-	min-height:100vh;
-	color:#1D1D1D;
+    font-family:sans-serif;
+    margin:0px;
+    padding:0px;
+    text-align:center;
+    display:flex;
+    flex-direction:column;
+    min-height:100vh;
+    color:#1D1D1D;
 }
 
 /* Vertically center menu */
 .spacer {
-	flex:1;
+    flex:1;
 }
 
 /* Hidden element */
 .hide {
-	display:none;
+    display:none;
 }
 
 /* Button template */
 button {
-	display:inline-block;
-	font-size:130%;
-	font-weight:bold;
-	text-decoration:none;
-	border:none;
-	border-radius:100px;
-	box-sizing:border-box;
-	padding:10px 40px;
-	margin:2px 0px;
-	text-transform:uppercase;
-	cursor:pointer;
-	transition:ease all 0.5s;
-	box-shadow:0 2px 4px 2px hsla(0,0%,0%,0.08);
-	color:white;
-	background-color:#0080FF;
-	background-image:linear-gradient(#0080FF,#0066CC);
+    display:inline-block;
+    font-size:130%;
+    font-weight:bold;
+    text-decoration:none;
+    border:none;
+    border-radius:100px;
+    box-sizing:border-box;
+    padding:10px 40px;
+    margin:2px 0px;
+    text-transform:uppercase;
+    cursor:pointer;
+    transition:ease all 0.5s;
+    box-shadow:0 2px 4px 2px hsla(0,0%,0%,0.08);
+    color:white;
+    background-color:#0080FF;
+    background-image:linear-gradient(#0080FF,#0066CC);
 }
 
 /* Button hover effect */
 button:hover {
-	filter:brightness(80%);
+    filter:brightness(80%);
 }
 
 /* Checkbox container */
 .checkbox {
-	display:inline-block;
-	position:relative;
-	padding-left:35px;
-	margin:10px 0px;
-	cursor:pointer;
-	font-size:22px;
+    display:inline-block;
+    position:relative;
+    padding-left:35px;
+    margin:10px 0px;
+    cursor:pointer;
+    font-size:22px;
 }
 
 /* Hide default checkbox */
 .checkbox input {
-	position:absolute;
-	opacity:0;
-	height:0;
-	width:0;
+    position:absolute;
+    opacity:0;
+    height:0;
+    width:0;
 }
 
 /* Custom checkbox */
 .checkmark {
-	position:absolute;
-	top:0;
-	left:0;
-	height:25px;
-	width:25px;
-	background-color:#EEEEEE;
-	border-radius:5px;
+    position:absolute;
+    top:0;
+    left:0;
+    height:25px;
+    width:25px;
+    background-color:#EEEEEE;
+    border-radius:5px;
 }
 
 /* Checked background */
 .checkbox input:checked ~ .checkmark {
-	background-color: #40BF40;
+    background-color: #40BF40;
 }
 
 /* Show the checkmark when checked */
 .checkbox input:checked ~ .checkmark:after {
-	display:block;
-	content:"";
-	position:absolute;
-	left:9px;
-	top:5px;
-	width:5px;
-	height:10px;
-	border:solid white;
-	border-width:0 3px 3px 0;
-	transform:rotate(45deg);
+    display:block;
+    content:"";
+    position:absolute;
+    left:9px;
+    top:5px;
+    width:5px;
+    height:10px;
+    border:solid white;
+    border-width:0 3px 3px 0;
+    transform:rotate(45deg);
 }
