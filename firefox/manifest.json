@@ -1,7 +1,7 @@
 {
     "manifest_version": 2,
     "name": "Outlook.com mailto",
-    "version": "2.2.2",
+    "version": "2.3",
     "description": "Add Outlook.com as a default email provider for all mailto links.",
     "author": "Wesley Branton",
     
@@ -32,7 +32,7 @@
     "protocol_handlers": [{
         "protocol": "mailto",
         "name": "Outlook.com",
-        "uriTemplate": "https://outlook.send/?to=%s"
+        "uriTemplate": "https://outlook.com/send/?to=%s"
     }],
     
     "background": {
@@ -44,6 +44,6 @@
         "tabs",
         "webRequest",
         "webRequestBlocking",
-        "*://outlook.send/*"
+        "*://outlook.com/send/*"
     ]
 }

@@ -128,4 +128,4 @@ const filter = {urls: [
     '*://outlook.office.com/mail/deeplink/compose'
 ]};
 chrome.runtime.onMessage.addListener(saveMessage);
-browser.webRequest.onBeforeRequest.addListener(openTab, {urls: ['*://outlook.send/*']}, ['blocking']);
+browser.webRequest.onBeforeRequest.addListener(openTab, {urls: ['*://outlook.com/send*']}, ['blocking']);

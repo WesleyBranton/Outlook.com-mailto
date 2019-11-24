@@ -13,7 +13,8 @@ To develop and test the extension, you need to open the "about:debugging" page i
 Further documentation about developing Firefox extensions can be found [here](https://developer.mozilla.org/docs/Mozilla/Add-ons/WebExtensions/Your_first_WebExtension).
 
 ## Release Notes
-### Version 2.2.2
+### Version 2.3
+* **[FIXED]** Firefox now uses the Outlook icon for the settings
 * **[CHANGE]** Overhauled options UI
 
 ### Version 2.2.1
