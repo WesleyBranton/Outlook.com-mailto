@@ -32,7 +32,7 @@
     "protocol_handlers": [{
         "protocol": "mailto",
         "name": "Outlook.com",
-        "uriTemplate": "https://outlook.send/?to=%s"
+        "uriTemplate": "https://outlook.com/send/?to=%s"
     }],
     
     "background": {
@@ -44,6 +44,6 @@
         "tabs",
         "webRequest",
         "webRequestBlocking",
-        "*://outlook.send/*"
+        "*://outlook.com/send/*"
     ]
 }
