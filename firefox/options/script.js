@@ -4,18 +4,18 @@
 
 // Load settings
 function restore(setting) {
-	if (setting.mode != 'live' && setting.mode != 'office') {
-		document.settings.mode.value = 'ask';
-	} else {
-		document.settings.mode.value = setting.mode;
-	}
+    if (setting.mode != 'live' && setting.mode != 'office') {
+        document.settings.mode.value = 'ask';
+    } else {
+        document.settings.mode.value = setting.mode;
+    }
 }
 
 // Save settings
 function save() {
-	browser.storage.local.set({
-		mode: document.settings.mode.value
-	});
+    browser.storage.local.set({
+        mode: document.settings.mode.value
+    });
 }
 
 let data = browser.storage.local.get();

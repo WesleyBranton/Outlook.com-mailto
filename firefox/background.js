@@ -37,7 +37,7 @@ function saveMessage(message) {
         // Create required handlers
         browser.tabs.onUpdated.addListener(handleIncomplete, filter);
         tmpUrl = message.msg[0];
-        var redirect = tmpUrl.slice(0,tmpUrl.indexOf('/compose?to='));
+        var redirect = tmpUrl.slice(0, tmpUrl.indexOf('/compose?to='));
         browser.tabs.onUpdated.addListener(handleComplete, {
             urls: [redirect + message.msg[1]]
         });
@@ -50,7 +50,7 @@ async function openTab(requestDetails) {
     var base = await getBase();
     var link = base + params;
     let tabInfo = await browser.tabs.get(requestDetails.tabId);
-    
+
     // Checks if the link is already in a new tab or if a new tab needs to be created
     if (tabInfo.url == 'about:blank') {
         browser.tabs.update(requestDetails.tabId, {
@@ -62,12 +62,14 @@ async function openTab(requestDetails) {
             url: link
         });
     }
-    
+
     saveMessage({
-        code:'create-handler',
+        code: 'create-handler',
         msg: [link, params]
     });
-    return {cancel: true};
+    return {
+        cancel: true
+    };
 }
 
 // Converts Firefox mailto string into standard URL parameters
@@ -76,7 +78,7 @@ function getParameters(url) {
     decodedURL = decodeURIComponent(url);
     decodedURL = decodedURL.slice(decodedURL.indexOf('mailto') + 7);
     if (decodedURL.indexOf('?') >= 0) {
-        to = decodedURL.slice(0,decodedURL.indexOf('?'));
+        to = decodedURL.slice(0, decodedURL.indexOf('?'));
         decodedURL = decodedURL.slice(decodedURL.indexOf('?') + 1);
         formatURL = '?to=' + to + '&' + decodedURL;
     } else {
@@ -90,13 +92,13 @@ function getParameters(url) {
 function format(url) {
     var output = '';
     var urlParts = url.split('&');
-    
+
     for (i = 0; i < urlParts.length; i++) {
         // Adds the '&' to all but the first query
         if (i > 0) {
             output += '&';
         }
-        
+
         var end = urlParts[i].indexOf('=');
         if (end > 0) {
             var field = urlParts[i].substring(0, end);
@@ -106,7 +108,7 @@ function format(url) {
             output += urlParts[i];
         }
     }
-    
+
     return output;
 }
 
@@ -123,9 +125,13 @@ async function getBase() {
 let data = browser.storage.local.get();
 data.then(verify);
 var tmpUrl;
-const filter = {urls: [
-    '*://outlook.live.com/mail/deeplink/compose',
-    '*://outlook.office.com/mail/deeplink/compose'
-]};
+const filter = {
+    urls: [
+        '*://outlook.live.com/mail/deeplink/compose',
+        '*://outlook.office.com/mail/deeplink/compose'
+    ]
+};
 chrome.runtime.onMessage.addListener(saveMessage);
-browser.webRequest.onBeforeRequest.addListener(openTab, {urls: ['*://outlook.com/send*']}, ['blocking']);
+browser.webRequest.onBeforeRequest.addListener(openTab, {
+    urls: ['*://outlook.com/send*']
+}, ['blocking']);

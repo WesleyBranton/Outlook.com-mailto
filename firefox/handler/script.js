@@ -5,7 +5,7 @@
 // Load email composition page
 function redirect(mode) {
     var parameters = decodeURIComponent(window.location);
-    parameters = parameters.slice(parameters.indexOf('?to='),parameters.length);
+    parameters = parameters.slice(parameters.indexOf('?to='), parameters.length);
     var url = 'https://outlook.' + mode + '.com/mail/deeplink/compose' + parameters;
     if (!wait) {
         if (document.getElementById('doNotAsk').checked) {
@@ -45,9 +45,13 @@ let data = browser.storage.local.get();
 data.then(loaded);
 
 // Load button click events
-window.onload = function(){
-    document.getElementById('live').addEventListener('click', function() {redirect('live')});
-    document.getElementById('office').addEventListener('click', function() {redirect('office')});
+window.onload = function() {
+    document.getElementById('live').addEventListener('click', function() {
+        redirect('live')
+    });
+    document.getElementById('office').addEventListener('click', function() {
+        redirect('office')
+    });
     if (!wait) {
         refreshUI();
     }
