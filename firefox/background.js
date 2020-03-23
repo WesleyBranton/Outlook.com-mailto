@@ -55,7 +55,7 @@ function saveMessage(message) {
         // Create required handlers
         browser.tabs.onUpdated.addListener(handleIncomplete, filter);
         tmpUrl = message.msg[0];
-        var redirect = tmpUrl.slice(0, tmpUrl.indexOf('/compose?to='));
+        const redirect = tmpUrl.slice(0, tmpUrl.indexOf('/compose?to='));
         browser.tabs.onUpdated.addListener(handleComplete, {
             urls: [redirect + message.msg[1]]
         });
@@ -69,10 +69,10 @@ function saveMessage(message) {
  * @returns {Object} Request cancel signal
  */
 async function openTab(requestDetails) {
-    var params = await getParameters(requestDetails.url);
-    var base = await getBase();
-    var link = base + params;
-    let tabInfo = await browser.tabs.get(requestDetails.tabId);
+    const params = await getParameters(requestDetails.url);
+    const base = await getBase();
+    const link = base + params;
+    const tabInfo = await browser.tabs.get(requestDetails.tabId);
 
     // Checks if the link is already in a new tab or if a new tab needs to be created
     if (tabInfo.url == 'about:blank') {
@@ -86,10 +86,12 @@ async function openTab(requestDetails) {
         });
     }
 
+    // Save message data
     saveMessage({
         code: 'create-handler',
         msg: [link, params]
     });
+
     return {
         cancel: true
     };
@@ -101,18 +103,22 @@ async function openTab(requestDetails) {
  * @returns {string} Standardized URL
  */
 function getParameters(url) {
-    var decodedURL, to, formatURL;
+    let decodedURL, to;
+
+    // Remove "mailto" from URL
     decodedURL = decodeURIComponent(url);
     decodedURL = decodedURL.slice(decodedURL.indexOf('mailto') + 7);
+
+    // Handle additional parameters (if any)
     if (decodedURL.indexOf('?') >= 0) {
         to = decodedURL.slice(0, decodedURL.indexOf('?'));
         decodedURL = decodedURL.slice(decodedURL.indexOf('?') + 1);
-        formatURL = '?to=' + to + '&' + decodedURL;
-    } else {
-        to = decodedURL;
-        formatURL = '?to=' + to;
+        decodedURL = to + '&' + decodedURL;
     }
-    return format(formatURL);
+
+    decodedURL = '?to=' + decodedURL;
+
+    return format(decodedURL);
 }
 
 /**
@@ -121,8 +127,8 @@ function getParameters(url) {
  * @returns {string} Formatted URL
  */
 function format(url) {
-    var output = '';
-    var urlParts = url.split('&');
+    let output = '';
+    const urlParts = url.split('&');
 
     for (i = 0; i < urlParts.length; i++) {
         // Adds the '&' to all but the first query
@@ -130,10 +136,11 @@ function format(url) {
             output += '&';
         }
 
-        var end = urlParts[i].indexOf('=');
+        // Convert field to lowercase
+        const end = urlParts[i].indexOf('=');
         if (end > 0) {
-            var field = urlParts[i].substring(0, end);
-            var value = urlParts[i].substring(end);
+            const field = urlParts[i].substring(0, end);
+            const value = urlParts[i].substring(end);
             output += field.toLowerCase() + value;
         } else {
             output += urlParts[i];
@@ -148,23 +155,25 @@ function format(url) {
  * @returns {string} Outlook URL
  */
 async function getBase() {
-    var data = await browser.storage.local.get();
+    const data = await browser.storage.local.get();
+
     if (data.mode == 'live' || data.mode == 'office') {
-        return 'https://outlook.' + data.mode + '.com/mail/deeplink/compose';
+        return `https://outlook.${data.mode}.com/mail/deeplink/compose`;
     } else {
         return '/handler/sendmail.html';
     }
 }
 
-let data = browser.storage.local.get();
-data.then(verify);
-var tmpUrl;
+let tmpUrl;
 const filter = {
     urls: [
         '*://outlook.live.com/mail/deeplink/compose',
         '*://outlook.office.com/mail/deeplink/compose'
     ]
 };
+let data = browser.storage.local.get();
+data.then(verify);
+
 chrome.runtime.onMessage.addListener(saveMessage);
 browser.webRequest.onBeforeRequest.addListener(openTab, {
     urls: ['*://outlook.com/send*']
