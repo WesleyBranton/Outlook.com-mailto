@@ -2,7 +2,10 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-// Verify setting validity
+/**
+ * Verify validity of settings in Storage API
+ * @param {Object} info Storage API object
+ */
 function verify(info) {
     if (info.mode != 'ask' && info.mode != 'live' && info.mode != 'office') {
         browser.storage.local.set({
@@ -11,7 +14,12 @@ function verify(info) {
     }
 }
 
-// Handle tab that will lose parameters
+/**
+ * Handle tabs that will lose parameters
+ * @param {int} tabId Tab ID
+ * @param {Object} changeInfo List of property changes
+ * @param {Object} tabInfo Tab information
+ */
 function handleIncomplete(tabId, changeInfo, tabInfo) {
     removeHandlers();
     browser.tabs.update(tabInfo.id, {
@@ -20,18 +28,28 @@ function handleIncomplete(tabId, changeInfo, tabInfo) {
     tmpUrl = null;
 }
 
-// Handle tab that will not lose parameters
+/**
+ * Handle tabs that will not lose parameters
+ * @param {int} tabId Tab ID
+ * @param {Object} changeInfo List of property changes
+ * @param {Object} tabInfo Tab information
+ */
 function handleComplete(tabId, changeInfo, tabInfo) {
     removeHandlers();
 }
 
-// Remove tab handlers
+/**
+ * Remove tab handlers
+ */
 function removeHandlers() {
     browser.tabs.onUpdated.removeListener(handleIncomplete);
     browser.tabs.onUpdated.removeListener(handleComplete);
 }
 
-// Saves message data if the user needs to login
+/**
+ * Save message data if the user needs to login
+ * @param {Object} message Message from handler.js
+ */
 function saveMessage(message) {
     if (message.code == 'create-handler') {
         // Create required handlers
@@ -44,7 +62,12 @@ function saveMessage(message) {
     }
 }
 
-// Opens new tab
+/**
+ * Open new tab
+ * @async
+ * @param {Object} requestDetails Information about request
+ * @returns {Object} Request cancel signal
+ */
 async function openTab(requestDetails) {
     var params = await getParameters(requestDetails.url);
     var base = await getBase();
@@ -72,7 +95,11 @@ async function openTab(requestDetails) {
     };
 }
 
-// Converts Firefox mailto string into standard URL parameters
+/**
+ * Convert Firefox mailto string to standard URL parameters
+ * @param {string} url Firefox URL
+ * @returns {string} Standardized URL
+ */
 function getParameters(url) {
     var decodedURL, to, formatURL;
     decodedURL = decodeURIComponent(url);
@@ -88,7 +115,11 @@ function getParameters(url) {
     return format(formatURL);
 }
 
-// Converts all queries to lowercase
+/**
+ * Convert all URL queries to lowercase
+ * @param {string} url Original URL
+ * @returns {string} Formatted URL
+ */
 function format(url) {
     var output = '';
     var urlParts = url.split('&');
@@ -112,7 +143,10 @@ function format(url) {
     return output;
 }
 
-// Determines which Outlook service to go to
+/** Determine which Outlook service to use
+ * @async
+ * @returns {string} Outlook URL
+ */
 async function getBase() {
     var data = await browser.storage.local.get();
     if (data.mode == 'live' || data.mode == 'office') {

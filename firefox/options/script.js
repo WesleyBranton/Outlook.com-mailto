@@ -2,7 +2,10 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-// Load settings
+/**
+ * Load settings from Storage API
+ * @param {Object} setting Storage API object
+ */
 function restore(setting) {
     if (setting.mode != 'live' && setting.mode != 'office') {
         document.settings.mode.value = 'ask';
@@ -11,7 +14,9 @@ function restore(setting) {
     }
 }
 
-// Save settings
+/**
+ * Save settings to Storage API
+ */
 function save() {
     browser.storage.local.set({
         mode: document.settings.mode.value

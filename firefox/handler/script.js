@@ -2,7 +2,10 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 
-// Load email composition page
+/**
+ * Load email composition page
+ * @param {string} mode Outlook service
+ */
 function redirect(mode) {
     var parameters = decodeURIComponent(window.location);
     parameters = parameters.slice(parameters.indexOf('?to='), parameters.length);
@@ -21,7 +24,10 @@ function redirect(mode) {
     window.location.replace(url);
 }
 
-// Automatically load if user selected 'Do not ask again'
+/**
+ * Automatically load if user selected 'Do not ask again'
+ * @param {Object} info Storage API object
+ */
 function loaded(info) {
     if (info.mode == 'live' || info.mode == 'office') {
         wait = true;
@@ -32,7 +38,9 @@ function loaded(info) {
     }
 }
 
-// Refresh UI
+/**
+ * Refresh UI
+ */
 function refreshUI() {
     if (document.getElementById('loading') && document.getElementById('choose')) {
         document.getElementById('loading').className = 'hide';
@@ -44,7 +52,9 @@ var wait = true;
 let data = browser.storage.local.get();
 data.then(loaded);
 
-// Load button click events
+/**
+ * Load button click events
+ */
 window.onload = function() {
     document.getElementById('live').addEventListener('click', function() {
         redirect('live')
