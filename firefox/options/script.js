@@ -7,10 +7,18 @@
  * @param {Object} setting Storage API object
  */
 function restore(setting) {
+    // Load mode setting
     if (setting.mode != 'live' && setting.mode != 'office') {
         document.settings.mode.value = 'ask';
     } else {
         document.settings.mode.value = setting.mode;
+    }
+
+    // Load open in new window setting
+    if (setting.openInNewWindow && setting.openInNewWindow == true) {
+        document.settings.openInNewWindow.value = 'yes';
+    } else {
+        document.settings.openInNewWindow.value = 'no';
     }
 }
 
@@ -19,7 +27,8 @@ function restore(setting) {
  */
 function save() {
     browser.storage.local.set({
-        mode: document.settings.mode.value
+        mode: document.settings.mode.value,
+        openInNewWindow: document.settings.openInNewWindow.value == 'yes'
     });
 }
 

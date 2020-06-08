@@ -7,10 +7,33 @@
  * @param {Object} info Storage API object
  */
 function verify(info) {
+    // Check that mode setting is valid
     if (info.mode != 'ask' && info.mode != 'live' && info.mode != 'office') {
         browser.storage.local.set({
             mode: 'ask'
         });
+    } else {
+        mode = info.mode;
+    }
+
+    // Check that open in new window setting is valid
+    if (info.openInNewWindow) {
+        openInNewWindow = true;
+    }
+}
+
+/**
+ * Update settings variables to match Storage API
+ * @param {Object} changes List of changes
+ * @param {string} area Storage area changed
+ */
+function updatePrefs(changes, area) {
+    if (changes.mode) {
+        mode = changes.mode.newValue;
+    }
+
+    if (changes.openInNewWindow) {
+        openInNewWindow = changes.openInNewWindow.newValue;
     }
 }
 
@@ -73,16 +96,25 @@ async function openTab(requestDetails) {
     const base = await getBase();
     const link = base + params;
     const tabInfo = await browser.tabs.get(requestDetails.tabId);
+    let tab;
 
     // Checks if the link is already in a new tab or if a new tab needs to be created
     if (tabInfo.url == 'about:blank') {
-        browser.tabs.update(requestDetails.tabId, {
+        tab = await browser.tabs.update(requestDetails.tabId, {
             url: link
         });
     } else {
-        browser.tabs.create({
+         tab = await browser.tabs.create({
             index: tabInfo.index + 1,
-            url: link
+            url: link,
+            active: !openInNewWindow
+        });
+    }
+
+    // Open email in new window, if user settings prefer that
+    if (openInNewWindow) {
+        browser.windows.create({
+            tabId: tab.id
         });
     }
 
@@ -151,20 +183,19 @@ function format(url) {
 }
 
 /** Determine which Outlook service to use
- * @async
  * @returns {string} Outlook URL
  */
-async function getBase() {
-    const data = await browser.storage.local.get();
-
-    if (data.mode == 'live' || data.mode == 'office') {
-        return `https://outlook.${data.mode}.com/mail/deeplink/compose`;
+function getBase() {
+    if (mode == 'live' || mode == 'office') {
+        return `https://outlook.${mode}.com/mail/deeplink/compose`;
     } else {
         return '/handler/sendmail.html';
     }
 }
 
 let tmpUrl;
+let openInNewWindow = false;
+let mode = 'ask';
 const filter = {
     urls: [
         '*://outlook.live.com/mail/deeplink/compose',
@@ -175,6 +206,7 @@ let data = browser.storage.local.get();
 data.then(verify);
 
 chrome.runtime.onMessage.addListener(saveMessage);
+browser.storage.onChanged.addListener(updatePrefs);
 browser.webRequest.onBeforeRequest.addListener(openTab, {
     urls: ['*://outlook.com/send*']
 }, ['blocking']);
