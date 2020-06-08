@@ -9,68 +9,49 @@
 function redirect(mode) {
     let parameters = decodeURIComponent(window.location);
     parameters = parameters.slice(parameters.indexOf('?to='), parameters.length);
-    let url = `https://outlook.${mode}.com/mail/deeplink/compose${parameters}`;
+    const url = `https://outlook.${mode}.com/mail/deeplink/compose${parameters}`;
 
     // Set the default Outlook service (if required)
-    if (!wait) {
-        if (document.getElementById('doNotAsk').checked) {
-            browser.storage.local.set({
-                'mode': mode
-            });
-        }
+    if (document.getElementById('doNotAsk').checked) {
+        browser.storage.local.set({
+            'mode': mode
+        });
     }
 
+    // Create data loss handler
     chrome.runtime.sendMessage({
         code: 'create-handler',
         msg: [url, parameters]
     });
 
+    // Redirect
+    showLoading(true);
     window.location.replace(url);
 }
 
 /**
- * Automatically load if user selected 'Do not ask again'
- * @param {Object} info Storage API object
- */
-function loaded(info) {
-    if (info.mode == 'live' || info.mode == 'office') {
-        wait = true;
-        redirect(info.mode);
-    } else {
-        wait = false;
-        refreshUI();
-    }
-}
-
-/**
  * Remove loading bar & show choices
+ * @param {boolean} show Show loading bar
  */
-function refreshUI() {
+function showLoading(show) {
     const loading = document.getElementById('loading');
     const choose = document.getElementById('choose');
 
-    if (loading && choose) {
-        loading.className = 'hide';
-        choose.className = '';
+    loading.classList.remove('hide');
+    choose.classList.remove('hide');
+
+    if (show) {
+        choose.classList.add('hide');
+    } else {
+        loading.classList.add('hide');
     }
 }
-
-let wait = true;
-let data = browser.storage.local.get();
-data.then(loaded);
 
 /**
  * Load button click events
  */
 window.onload = function() {
-    document.getElementById('live').addEventListener('click', () => {
-        redirect('live')
-    });
-    document.getElementById('office').addEventListener('click', () => {
-        redirect('office')
-    });
-
-    if (!wait) {
-        refreshUI();
-    }
+    document.getElementById('live').addEventListener('click', () => { redirect('live') });
+    document.getElementById('office').addEventListener('click', () => { redirect('office') });
+    showLoading(false);
 };
