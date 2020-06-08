@@ -24,8 +24,8 @@ function verify(info) {
 
 /**
  * Update settings variables to match Storage API
- * @param {Object} changes 
- * @param {string} area 
+ * @param {Object} changes List of changes
+ * @param {string} area Storage area changed
  */
 function updatePrefs(changes, area) {
     if (changes.mode) {
