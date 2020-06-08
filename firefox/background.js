@@ -106,7 +106,8 @@ async function openTab(requestDetails) {
     } else {
          tab = await browser.tabs.create({
             index: tabInfo.index + 1,
-            url: link
+            url: link,
+            active: !openInNewWindow
         });
     }
 
