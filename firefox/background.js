@@ -12,6 +12,21 @@ function verify(info) {
             mode: 'ask'
         });
     }
+
+    if (info.openInNewWindow) {
+        openInNewWindow = true;
+    }
+}
+
+/**
+ * Update settings variables to match Storage API
+ * @param {Object} changes 
+ * @param {string} area 
+ */
+function updatePrefs(changes, area) {
+    if (changes.openInNewWindow) {
+        openInNewWindow = changes.openInNewWindow.newValue;
+    }
 }
 
 /**
@@ -73,16 +88,24 @@ async function openTab(requestDetails) {
     const base = await getBase();
     const link = base + params;
     const tabInfo = await browser.tabs.get(requestDetails.tabId);
+    let tab;
 
     // Checks if the link is already in a new tab or if a new tab needs to be created
     if (tabInfo.url == 'about:blank') {
-        browser.tabs.update(requestDetails.tabId, {
+        tab = await browser.tabs.update(requestDetails.tabId, {
             url: link
         });
     } else {
-        browser.tabs.create({
+         tab = await browser.tabs.create({
             index: tabInfo.index + 1,
             url: link
+        });
+    }
+
+    // Open email in new window, if user settings prefer that
+    if (openInNewWindow) {
+        browser.windows.create({
+            tabId: tab.id
         });
     }
 
@@ -165,6 +188,7 @@ async function getBase() {
 }
 
 let tmpUrl;
+let openInNewWindow = false;
 const filter = {
     urls: [
         '*://outlook.live.com/mail/deeplink/compose',
@@ -175,6 +199,7 @@ let data = browser.storage.local.get();
 data.then(verify);
 
 chrome.runtime.onMessage.addListener(saveMessage);
+browser.storage.onChanged.addListener(updatePrefs);
 browser.webRequest.onBeforeRequest.addListener(openTab, {
     urls: ['*://outlook.com/send*']
 }, ['blocking']);
