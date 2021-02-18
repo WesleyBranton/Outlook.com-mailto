@@ -13,26 +13,4 @@ To develop and test the extension, you need to open the "about:debugging" page i
 Further documentation about developing Firefox extensions can be found [here](https://developer.mozilla.org/docs/Mozilla/Add-ons/WebExtensions/Your_first_WebExtension).
 
 ## Release Notes
-### Version 2.4
-* **[NEW]** Links can now be opened in a new window
-* **[FIXED]** Minor performance improvement
-
-### Version 2.3
-* **[FIXED]** Firefox now uses the Outlook icon for the settings
-* **[CHANGE]** Overhauled options UI
-
-### Version 2.2.1
-* **[FIXED]** Links now work when a website uses uppercase URL query fields
-
-### Version 2.2
-* **[FIXED]** Opening link in new tab no longer creates additional blank tab
-* **[FIXED]** Created tab always appears next to the original tab
-
-### Version 2.1
-* **[FIXED]** Outlook now opens in a new tab
-* **[FIXED]** The Outlook selection screen will not load if you have selected "Don't ask again"
-* **[FIXED]** Optimized link generation
-
-### Version 2.0
-* **[NEW]** Added support for outlook.office.com
-* **[FIXED]** Message prefill data is no longer lost at login page
+Release notes can be found on [this GitHub repository](https://github.com/WesleyBranton/Outlook.com-mailto/releases) or [the Firefox add-ons listing](https://addons.mozilla.org/firefox/addon/outlook-com-mailto/versions/).
