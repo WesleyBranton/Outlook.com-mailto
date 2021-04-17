@@ -20,6 +20,11 @@ function verify(info) {
     if (info.openInNewWindow) {
         openInNewWindow = true;
     }
+
+    // Check that context menu setting is valid
+    if (typeof info.showContextMenu == 'boolean') {
+        showContextMenu = info.showContextMenu;
+    }
 }
 
 /**
@@ -34,6 +39,10 @@ function updatePrefs(changes, area) {
 
     if (changes.openInNewWindow) {
         openInNewWindow = changes.openInNewWindow.newValue;
+    }
+
+    if (changes.showContextMenu) {
+        showContextMenu = changes.showContextMenu.newValue;
     }
 }
 
@@ -74,7 +83,9 @@ function removeHandlers() {
  * @param {Object} message Message from handler.js
  */
 function saveMessage(message) {
-    if (message.code == 'create-handler') {
+    if (message.code == 'verify') {
+        toggleContextButton(message.message);
+    } else if (message.code == 'create-handler') {
         // Create required handlers
         browser.tabs.onUpdated.addListener(handleIncomplete, filter);
         tmpUrl = message.msg[0];
@@ -193,9 +204,89 @@ function getBase() {
     }
 }
 
-let tmpUrl;
+/**
+ * Handle context menu open
+ * @param {Object} info Context menu info
+ * @param {Object} tab Selected tab
+ */
+function contextMenuShown(info, tab) {
+    if (info.contexts.includes('selection')) {
+        if (showContextMenu && hasPermission('<all_urls>', permissionType.ORIGINS)) {
+            browser.tabs.executeScript(tab.id, {
+                file: 'contextMenu.js'
+            });
+        } else {
+            contextMenuClear();
+            toggleContextButton(null);
+        }
+    }
+}
+
+/**
+ * Handle context menu close
+ */
+ function contextMenuClear() {
+    selectedEmail = null;
+}
+
+/**
+ * Handle context menu click
+ * @param {Object} info Context menu info
+ * @param {Object} tab Selected tab
+ */
+ function contextMenuClicked(info, tab) {
+    if (info.menuItemId == 'outlook-mailto-send' && selectedEmail != null) {
+        browser.tabs.create({
+            index: tab.index + 1,
+            url: 'mailto:' + selectedEmail
+        });
+    }
+}
+
+/**
+ * Toggle context menu button (show if user has valid email selected)
+ * @async
+ * @param {String} selection User selected text
+ */
+async function toggleContextButton(selection) {
+    const valid = emailPattern.test(selection);
+    selectedEmail = (valid) ? selection : null;
+
+    await browser.menus.update('outlook-mailto-send', {
+        title: (valid) ? 'Send email to ' + selection : 'Send email',
+        visible: valid
+    });
+    browser.menus.refresh();
+}
+
+/**
+ * Cache the list of granted permissions in the background.js file
+ * allowing for quicker access
+ */
+async function updatePermissionsCache() {
+    permissions = await browser.permissions.getAll();
+}
+
+/**
+ * Checks if add-on has a specific permission
+ * @param {String} permission
+ * @param {String} type
+ * @returns Granted
+ */
+function hasPermission(permission, type) {
+    return permissions[type].includes(permission);
+}
+
+const permissionType = {
+    ORIGINS: 'origins',
+    PERMISSIONS: 'permissions'
+}
+let tmpUrl, permissions;
 let openInNewWindow = false;
+let showContextMenu = true;
 let mode = 'ask';
+let selectedEmail = null;
+const emailPattern = /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/;
 const filter = {
     urls: [
         '*://outlook.live.com/mail/deeplink/compose',
@@ -210,3 +301,16 @@ browser.storage.onChanged.addListener(updatePrefs);
 browser.webRequest.onBeforeRequest.addListener(openTab, {
     urls: ['*://outlook.com/send*']
 }, ['blocking']);
+
+browser.menus.create({
+    id: 'outlook-mailto-send',
+    contexts: ['selection'],
+    title: 'Send email',
+    type: 'normal',
+    visible: false
+});
+browser.menus.onShown.addListener(contextMenuShown);
+browser.menus.onClicked.addListener(contextMenuClicked);
+browser.menus.onHidden.addListener(contextMenuClear);
+browser.permissions.onRemoved.addListener(updatePermissionsCache);
+browser.permissions.onAdded.addListener(updatePermissionsCache);

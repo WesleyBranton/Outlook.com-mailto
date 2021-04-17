@@ -8,6 +8,7 @@
 <head>
   <meta charset="utf-8" />
   <link rel="stylesheet" href="../lib/new_browser_style.css" />
+  <link rel="stylesheet" href="style.css" />
 </head>
 
 <body class="browser-style">
@@ -27,6 +28,22 @@
       <div>
         <label><input type="radio" name="openInNewWindow" value="yes"> Yes</label><br>
         <label><input type="radio" name="openInNewWindow" value="no"> No</label>
+      </div>
+    </section>
+    <div class="panel-section-separator"></div>
+    <section class="panel-section has-help">
+      <label for="showContextMenu">Show send button in context menu?<br>
+        <a href="https://github.com/WesleyBranton/Outlook.com-mailto/wiki/Create-new-email-by-highlighting-email-addresses-on-websites%3F" target="_blank">Learn More</a>
+        <span id="triggerContextMenuPermissionContainer" class="hidden"> - <a href="#" id="triggerContextMenuPermission">Grant permission</a></span>
+      </label>
+      <div>
+        <label><input type="radio" name="showContextMenu" value="yes"> Yes</label><br>
+        <label><input type="radio" name="showContextMenu" value="no"> No</label>
+      </div>
+    </section>
+    <section class="panel-section">
+      <div>
+        <div id="error-contextMenuPermissionMissing" class="message-bar error hidden">Showing the send button in the context menu requires additional permissions.</div>
       </div>
     </section>
   </form>
