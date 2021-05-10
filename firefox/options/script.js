@@ -20,6 +20,18 @@ function restore(setting) {
     } else {
         document.settings.openInNewWindow.value = 'no';
     }
+
+    // Load context menu setting
+    if (typeof setting.showContextMenu == 'boolean' && !setting.showContextMenu) {
+        document.settings.showContextMenu.value = 'no';
+    } else {
+        document.settings.showContextMenu.value = 'yes';
+
+        // Check context menu permission
+        browser.permissions.contains({
+            origins: ['<all_urls>']
+        }).then(processContextMenuPermissions);
+    }
 }
 
 /**
@@ -28,10 +40,60 @@ function restore(setting) {
 function save() {
     browser.storage.local.set({
         mode: document.settings.mode.value,
-        openInNewWindow: document.settings.openInNewWindow.value == 'yes'
+        openInNewWindow: document.settings.openInNewWindow.value == 'yes',
+        showContextMenu: document.settings.showContextMenu.value == 'yes'
     });
+
+    verifyContextMenuPermissions();
+}
+
+/**
+ * Requests additional permissions for the context menu feature (if required)
+ */
+function verifyContextMenuPermissions() {
+    const permissions = { origins: ['<all_urls>'] };
+
+    if (document.settings.showContextMenu.value == 'yes') {
+        browser.permissions.request(permissions).then(processContextMenuPermissions);
+    } else {
+        browser.permissions.remove(permissions);
+        processContextMenuPermissions(true);
+    }
+}
+
+/**
+ * Handles error messages for missing context menu permissions
+ * @param {boolean} success
+ */
+function processContextMenuPermissions(success) {
+    toggleError('contextMenuPermissionMissing', !success);
+
+    const container = document.getElementById('triggerContextMenuPermissionContainer');
+    if (success) {
+        container.classList.add('hidden');
+    } else {
+        container.classList.remove('hidden');
+    }
+}
+
+/**
+ * Shows/Hides error messages
+ * @param {String} key
+ * @param {boolean} show
+ */
+function toggleError(key, show) {
+    const error = document.getElementById('error-' + key);
+
+    if (error) {
+        if (show) {
+            error.classList.remove('hidden');
+        } else {
+            error.classList.add('hidden');
+        }
+    }
 }
 
 let data = browser.storage.local.get();
 data.then(restore);
 document.settings.addEventListener('change', save);
+document.getElementById('triggerContextMenuPermission').addEventListener('click', verifyContextMenuPermissions);
