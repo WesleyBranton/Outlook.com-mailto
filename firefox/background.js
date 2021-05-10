@@ -193,6 +193,19 @@ function getBase() {
     }
 }
 
+/**
+ * Handles installation and update of extension
+ * @param {Object} details 
+ */
+function handleInstalled(details) {
+    if (details.reason == 'update') {
+        const previousVersion = parseFloat(details.previousVersion);
+        if (previousVersion < 2.5) {
+            browser.tabs.create({ url: 'https://addons.wesleybranton.com/addon/outlook-mailto/update/v2_5' });
+        }
+    }
+}
+
 let tmpUrl;
 let openInNewWindow = false;
 let mode = 'ask';
@@ -205,7 +218,8 @@ const filter = {
 let data = browser.storage.local.get();
 data.then(verify);
 
-chrome.runtime.onMessage.addListener(saveMessage);
+browser.runtime.onInstalled.addListener(handleInstalled);
+browser.runtime.onMessage.addListener(saveMessage);
 browser.storage.onChanged.addListener(updatePrefs);
 browser.webRequest.onBeforeRequest.addListener(openTab, {
     urls: ['*://outlook.com/send*']
