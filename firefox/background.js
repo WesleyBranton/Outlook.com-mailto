@@ -308,6 +308,7 @@ const filter = {
 };
 let data = browser.storage.local.get();
 data.then(verify);
+updatePermissionsCache();
 
 browser.runtime.onInstalled.addListener(handleInstalled);
 browser.runtime.onMessage.addListener(saveMessage);

@@ -22,15 +22,15 @@ function restore(setting) {
     }
 
     // Load context menu setting
-    if (typeof setting.showContextMenu == 'boolean' && !setting.showContextMenu) {
-        document.settings.showContextMenu.value = 'no';
-    } else {
+    if (setting.showContextMenu && setting.showContextMenu == true) {
         document.settings.showContextMenu.value = 'yes';
-
+        
         // Check context menu permission
         browser.permissions.contains({
             origins: ['<all_urls>']
         }).then(processContextMenuPermissions);
+    } else {
+        document.settings.showContextMenu.value = 'no';
     }
 }
 
