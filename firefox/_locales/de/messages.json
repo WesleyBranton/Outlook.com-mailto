@@ -1,0 +1,74 @@
+{
+    "extensionDescription": {
+        "message": "Fügen Sie Outlook.com als Standard-E-Mail-Anbieter für alle mailto-Links hinzu."
+    },
+    
+    "settingMode": {
+        "message": "Bevorzugte Outlook.com-Version"
+    },
+
+    "settingNewWindow": {
+        "message": "E-Mails in einem neuen Fenster öffnen?"
+    },
+
+    "settingContextMenu": {
+        "message": "Senden-Button im Kontextmenü anzeigen?"
+    },
+
+    "modeOffice": {
+        "message": "Organisation"
+    },
+    
+    "modeLive": {
+        "message": "Persönlich"
+    },
+
+    "modeAsk": {
+        "message": "Frag mich immer"
+    },
+
+    "optionYes": {
+        "message": "Jawohl"
+    },
+
+    "optionNo": {
+        "message": "Nein"
+    },
+
+    "optionDontAskAgain": {
+        "message": "Frag mich nicht mehr"
+    },
+
+    "linkLearnMore": {
+        "message": "Lern mehr"
+    },
+
+    "linkGrantPermission": {
+        "message": "Berechtigung erteilen"
+    },
+
+    "errorPermissionMissingContext": {
+        "message": "Das Anzeigen des Senden-Buttons im Kontextmenü erfordert zusätzliche Berechtigungen."
+    },
+
+    "headerSelectVersion": {
+        "message": "Welche Version von Outlook.com möchten Sie verwenden?"
+    },
+    
+    "titleSelectVersion": {
+        "message": "Wählen Sie Outlook.com-Version"
+    },
+
+    "sendEmail": {
+        "message": "E-Mail senden"
+    },
+    
+    "sendEmailTo": {
+        "message": "Senden Sie eine E-Mail an $EMAIL$",
+        "placeholders": {
+            "email": {
+                "content": "$1"
+            }
+        }
+    }
+}
