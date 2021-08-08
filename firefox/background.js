@@ -103,8 +103,8 @@ function saveMessage(message) {
  * @returns {Object} Request cancel signal
  */
 async function openTab(requestDetails) {
-    const params = await getParameters(requestDetails.url);
-    const base = await getBase();
+    const params = getParameters(requestDetails.url);
+    const base = getBase();
     const link = base + params;
     const tabInfo = await browser.tabs.get(requestDetails.tabId);
     let tab;

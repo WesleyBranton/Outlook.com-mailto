@@ -9,26 +9,35 @@
   <title>Select Outlook.com version</title>
   <meta charset="utf-8">
   <link rel="icon" type="image/png" href="../icons/icon-96.png">
+  <link rel="stylesheet" href="../lib/new_browser_style.css">
   <link rel="stylesheet" href="style.css">
   <script src="script.js"></script>
 </head>
 
-<body>
+<body class="browser-style browser-style-page">
   <div class="spacer"></div>
-  <div id="choose" class="hide">
-    <h1>Which version of Outlook.com would you like to use?</h1>
-    <button id="live">Personal</button>
-    <br>
-    <button id="office">Organization</button>
-    <br>
-    <label class="checkbox" for="doNotAsk">Do not ask me again
-      <input type="checkbox" name="doNotAsk" id="doNotAsk">
-      <span class="checkmark"></span>
-    </label>
+
+  <div id="choose" class="browser-style-container hide">
+    <header class="panel-section panel-section-header">
+      <img class="icon-section-header" src="../icons/icon-32.png" alt="">
+      <h1 class="text-section-header">Which version of Outlook.com would you like to use?</h1>
+    </header>
+  
+    <div>
+      <button id="live" class="default puffy">Personal</button>
+      <button id="office" class="default puffy">Organization</button>
+    </div>
+
+    <div id="doNotAskContainer">
+      <input type="checkbox" id="doNotAsk" name="doNotAsk">
+      <label for="doNotAsk" class="clickable">Don't ask me again</label>
+    </div>
   </div>
+
   <div id="loading">
-    <h1>Loading...</h1>
+    <div></div>
   </div>
+
   <div class="spacer"></div>
 </body>
 
