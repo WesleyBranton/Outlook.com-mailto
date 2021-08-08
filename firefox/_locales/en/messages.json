@@ -1,0 +1,65 @@
+{
+    "extensionName": {
+        "message": "Outlook.com mailto"
+    },
+
+    "extensionDescription": {
+        "message": "Add Outlook.com as a default email provider for all mailto links."
+    },
+    
+    "settingMode": {
+        "message": "Preferred Outlook.com version"
+    },
+
+    "settingNewWindow": {
+        "message": "Open emails in a new window?"
+    },
+
+    "settingContextMenu": {
+        "message": "Show send button in context menu?"
+    },
+
+    "modeOffice": {
+        "message": "Organization"
+    },
+    
+    "modeLive": {
+        "message": "Personal"
+    },
+
+    "modeAsk": {
+        "message": "Always ask me"
+    },
+
+    "optionYes": {
+        "message": "Yes"
+    },
+
+    "optionNo": {
+        "message": "No"
+    },
+
+    "optionDontAskAgain": {
+        "message": "Don't ask me again"
+    },
+
+    "linkLearnMore": {
+        "message": "Learn More"
+    },
+
+    "linkGrantPermission": {
+        "message": "Grant Permission"
+    },
+
+    "errorPermissionMissingContext": {
+        "message": "Showing the send button in the context menu requires additional permissions."
+    },
+
+    "headerSelectVersion": {
+        "message": "Which version of Outlook.com would you like to use?"
+    },
+    
+    "titleSelectVersion": {
+        "message": "Select Outlook.com version"
+    }
+}

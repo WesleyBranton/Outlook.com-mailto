@@ -93,6 +93,7 @@ function toggleError(key, show) {
     }
 }
 
+i18nParse();
 let data = browser.storage.local.get();
 data.then(restore);
 document.settings.addEventListener('change', save);

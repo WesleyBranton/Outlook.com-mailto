@@ -51,6 +51,7 @@ function showLoading(show) {
  * Load button click events
  */
 window.onload = function() {
+    i18nParse();
     document.getElementById('live').addEventListener('click', () => { redirect('live') });
     document.getElementById('office').addEventListener('click', () => { redirect('office') });
     showLoading(false);

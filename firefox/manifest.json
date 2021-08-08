@@ -1,9 +1,10 @@
 {
     "manifest_version": 2,
-    "name": "Outlook.com mailto",
+    "name": "__MSG_extensionName__",
     "version": "2.5",
-    "description": "Add Outlook.com as a default email provider for all mailto links.",
+    "description": "__MSG_extensionDescription__",
     "author": "Wesley Branton",
+    "default_locale": "en",
 
     "developer": {
         "name": "Wesley Branton",

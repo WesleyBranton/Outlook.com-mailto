@@ -9,41 +9,56 @@
   <meta charset="utf-8" />
   <link rel="stylesheet" href="../lib/new_browser_style.css" />
   <link rel="stylesheet" href="style.css" />
+  <script type="text/javascript" src="../lib/i18n_helper.js"></script>
 </head>
 
 <body class="browser-style">
   <form name="settings">
     <section class="panel-section">
-      <label for="mode">Preferred Outlook.com version<br>
-        <a href="https://github.com/WesleyBranton/Outlook.com-mailto/wiki/Which-Outlook.com-version-do-I-choose" target="_blank">Learn More</a></label>
+      <label for="mode">
+        <span data-i18n="settingMode"></span><br>
+        <a href="https://github.com/WesleyBranton/Outlook.com-mailto/wiki/Which-Outlook.com-version-do-I-choose" target="_blank" data-i18n="linkLearnMore"></a>
+      </label>
       <div>
-        <label><input type="radio" name="mode" value="live"> Personal</label><br>
-        <label><input type="radio" name="mode" value="office"> Organization</label><br>
-        <label><input type="radio" name="mode" value="ask" checked> Always ask me</label>
+        <input type="radio" name="mode" id="mode-live" value="live">
+        <label for="mode-live" class="clickable" data-i18n="modeLive"></label>
+        <br>
+        <input type="radio" name="mode" id="mode-office" value="office">
+        <label for="mode-office" class="clickable" data-i18n="modeOffice"></label>
+        <br>
+        <input type="radio" name="mode" id="mode-ask" value="ask">
+        <label for="mode-ask" class="clickable" data-i18n="modeAsk"></label>
       </div>
     </section>
     <div class="panel-section-separator"></div>
     <section class="panel-section">
-      <label for="openInNewWindow">Open emails in a new window?</label>
+      <label for="openInNewWindow" data-i18n="settingNewWindow"></label>
       <div>
-        <label><input type="radio" name="openInNewWindow" value="yes"> Yes</label><br>
-        <label><input type="radio" name="openInNewWindow" value="no"> No</label>
+        <input type="radio" name="openInNewWindow" id="openInNewWindow-yes" value="yes">
+        <label for="openInNewWindow-yes" class="clickable" data-i18n="optionYes"></label>
+        <br>
+        <input type="radio" name="openInNewWindow" id="openInNewWindow-no" value="no">
+        <label for="openInNewWindow-no" class="clickable" data-i18n="optionNo"></label>
       </div>
     </section>
     <div class="panel-section-separator"></div>
     <section class="panel-section has-help">
-      <label for="showContextMenu">Show send button in context menu?<br>
-        <a href="https://github.com/WesleyBranton/Outlook.com-mailto/wiki/Create-new-email-by-highlighting-email-addresses-on-websites" target="_blank">Learn More</a>
-        <span id="triggerContextMenuPermissionContainer" class="hidden"> - <a href="#" id="triggerContextMenuPermission">Grant permission</a></span>
+      <label for="showContextMenu">
+        <label data-i18n="settingContextMenu"></label><br>
+        <a href="https://github.com/WesleyBranton/Outlook.com-mailto/wiki/Create-new-email-by-highlighting-email-addresses-on-websites" target="_blank" data-i18n="linkLearnMore"></a>
+        <span id="triggerContextMenuPermissionContainer" class="hidden"> - <a href="#" id="triggerContextMenuPermission" data-i18n="linkGrantPermission"></a></span>
       </label>
       <div>
-        <label><input type="radio" name="showContextMenu" value="yes"> Yes</label><br>
-        <label><input type="radio" name="showContextMenu" value="no"> No</label>
+        <input type="radio" name="showContextMenu" id="showContextMenu-yes" value="yes">
+        <label for="showContextMenu-yes" class="clickable" data-i18n="optionYes"></label>
+        <br>
+        <input type="radio" name="showContextMenu" id="showContextMenu-no" value="no">
+        <label for="showContextMenu-no" class="clickable" data-i18n="optionNo"></label>
       </div>
     </section>
     <section class="panel-section">
       <div>
-        <div id="error-contextMenuPermissionMissing" class="message-bar error hidden">Showing the send button in the context menu requires additional permissions.</div>
+        <div id="error-contextMenuPermissionMissing" class="message-bar error hidden" data-i18n="errorPermissionMissingContext"></div>
       </div>
     </section>
   </form>
