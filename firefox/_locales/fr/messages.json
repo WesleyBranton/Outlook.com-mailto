@@ -1,0 +1,74 @@
+{
+    "extensionDescription": {
+        "message": "Ajoutez Outlook.com comme fournisseur de messagerie par défaut pour tous les liens mailto."
+    },
+    
+    "settingMode": {
+        "message": "Version préférée d'Outlook.com"
+    },
+
+    "settingNewWindow": {
+        "message": "Ouvrir les e-mails dans une nouvelle fenêtre?"
+    },
+
+    "settingContextMenu": {
+        "message": "Afficher le bouton d'envoi dans le menu contextuel?"
+    },
+
+    "modeOffice": {
+        "message": "Organisation"
+    },
+    
+    "modeLive": {
+        "message": "Personnel"
+    },
+
+    "modeAsk": {
+        "message": "Demandez-moi toujours"
+    },
+
+    "optionYes": {
+        "message": "Oui"
+    },
+
+    "optionNo": {
+        "message": "Non"
+    },
+
+    "optionDontAskAgain": {
+        "message": "Ne me demande plus"
+    },
+
+    "linkLearnMore": {
+        "message": "Apprendre encore plus"
+    },
+
+    "linkGrantPermission": {
+        "message": "Donner la permission"
+    },
+
+    "errorPermissionMissingContext": {
+        "message": "L'affichage du bouton d'envoi dans le menu contextuel nécessite des autorisations supplémentaires."
+    },
+
+    "headerSelectVersion": {
+        "message": "Quelle version d'Outlook.com souhaitez-vous utiliser?"
+    },
+    
+    "titleSelectVersion": {
+        "message": "Sélectionnez la version Outlook.com"
+    },
+
+    "sendEmail": {
+        "message": "Envoyer un e-mail"
+    },
+    
+    "sendEmailTo": {
+        "message": "Envoyez un e-mail à $EMAIL$",
+        "placeholders": {
+            "email": {
+                "content": "$1"
+            }
+        }
+    }
+}
