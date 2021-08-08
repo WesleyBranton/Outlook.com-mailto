@@ -266,7 +266,7 @@ async function toggleContextButton(selection) {
     selectedEmail = (valid) ? selection : null;
 
     await browser.menus.update('outlook-mailto-send', {
-        title: (valid) ? 'Send email to ' + selection : 'Send email',
+        title: (valid) ? browser.i18n.getMessage('sendEmailTo', selection) : browser.i18n.getMessage('sendEmail'),
         visible: valid
     });
     browser.menus.refresh();

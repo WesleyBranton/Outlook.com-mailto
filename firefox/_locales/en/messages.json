@@ -61,5 +61,18 @@
     
     "titleSelectVersion": {
         "message": "Select Outlook.com version"
+    },
+
+    "sendEmail": {
+        "message": "Send email"
+    },
+    
+    "sendEmailTo": {
+        "message": "Send email to $EMAIL$",
+        "placeholders": {
+            "email": {
+                "content": "$1"
+            }
+        }
     }
 }
