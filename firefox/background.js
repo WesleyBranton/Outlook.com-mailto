@@ -212,7 +212,7 @@ function handleInstalled(details) {
     if (details.reason == 'update') {
         const previousVersion = parseFloat(details.previousVersion);
         if (previousVersion < 2.5) {
-            browser.tabs.create({ url: 'https://addons.wesleybranton.com/addon/outlook-mailto/update/v2_5' });
+            browser.tabs.create({ url: `${webBase}/update/v2_5` });
         }
     }
 }
@@ -290,10 +290,34 @@ function hasPermission(permission, type) {
     return permissions[type].includes(permission);
 }
 
+/**
+ * Set up uninstall page
+ */
+function setUninstallPage() {
+    getSystemDetails((details) => {
+        browser.runtime.setUninstallURL(`${webBase}/uninstall/?browser=${details.browser}&os=${details.os}&version=${details.version}`);
+    });
+}
+
+/**
+ * Send system details to callback
+ * @param {Function} callback
+ */
+function getSystemDetails(callback) {
+    browser.runtime.getPlatformInfo((platform) => {
+        callback({
+            browser: 'firefox',
+            version: browser.runtime.getManifest().version,
+            os: platform.os
+        });
+    });
+}
+
 const permissionType = {
     ORIGINS: 'origins',
     PERMISSIONS: 'permissions'
 }
+const webBase = 'https://addons.wesleybranton.com/addon/outlook-mailto';
 let tmpUrl, permissions;
 let openInNewWindow = false;
 let showContextMenu = true;
@@ -309,6 +333,7 @@ const filter = {
 let data = browser.storage.local.get();
 data.then(verify);
 updatePermissionsCache();
+setUninstallPage();
 
 browser.runtime.onInstalled.addListener(handleInstalled);
 browser.runtime.onMessage.addListener(saveMessage);
