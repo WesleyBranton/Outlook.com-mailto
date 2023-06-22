@@ -150,7 +150,7 @@ function getParameters(url) {
 
     // Remove "mailto" from URL
     decodedURL = decodeURIComponent(url);
-    decodedURL = decodedURL.slice(decodedURL.indexOf('mailto') + 7);
+    decodedURL = decodedURL.slice(decodedURL.indexOf('mailto'));
 
     // Handle additional parameters (if any)
     if (decodedURL.indexOf('?') >= 0) {
