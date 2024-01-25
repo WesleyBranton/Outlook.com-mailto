@@ -197,8 +197,10 @@ function format(url) {
  * @returns {string} Outlook URL
  */
 function getBase() {
-    if (mode == 'live' || mode == 'office') {
-        return `https://outlook.${mode}.com/mail/deeplink/compose`;
+    if (mode == 'live') {
+        return `https://outlook.live.com/mail/compose`;
+    } else if (mode == 'office') {
+        return `https://outlook.office.com/mail/deeplink/compose`;
     } else {
         return '/handler/sendmail.html';
     }
